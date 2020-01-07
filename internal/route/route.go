@@ -1,22 +1,12 @@
 package route
 
 import (
-	"fmt"
-
+	"github.com/andey-pe/apipe/internal/action"
 	"github.com/andey-pe/apipe/internal/core/router"
-	"github.com/valyala/fasthttp"
 )
 
 // ConfigureRoute ..
 func ConfigureRoute(r router.RouterAbstract) {
-	r.Get("/", home, AuthMiddleware, OAuthMiddleware)
-	r.Get("/about", about)
-}
-
-func home(ctx *fasthttp.RequestCtx) {
-	fmt.Fprint(ctx, "Welcome!\n")
-}
-
-func about(ctx *fasthttp.RequestCtx) {
-	fmt.Fprint(ctx, "About page!\n")
+	r.Get("/", action.Home, AuthMiddleware, OAuthMiddleware)
+	r.Get("/about", action.About)
 }
