@@ -1,6 +1,6 @@
 package main
 
-import "github.com/andey-pe/apipe/internal/server"
+import "github.com/andey-pe/apipe/internal/core/server"
 
 func main() {
 	c := buildContainer()

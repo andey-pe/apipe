@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/andey-pe/apipe/internal/config"
-	"github.com/andey-pe/apipe/internal/router"
-	"github.com/andey-pe/apipe/internal/server"
+	"github.com/andey-pe/apipe/internal/core/config"
+	"github.com/andey-pe/apipe/internal/core/router"
+	"github.com/andey-pe/apipe/internal/core/server"
 	"go.uber.org/dig"
 )
 
