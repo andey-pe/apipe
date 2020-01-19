@@ -6,6 +6,6 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
-func Home(ctx *fasthttp.RequestCtx) {
+func (a *Action) Home(ctx *fasthttp.RequestCtx) {
 	fmt.Fprint(ctx, "Welcome!\n")
 }

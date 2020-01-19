@@ -6,7 +6,7 @@ import (
 )
 
 // ConfigureRoute ..
-func ConfigureRoute(r router.RouterAbstract) {
-	r.Get("/", action.Home, AuthMiddleware, OAuthMiddleware)
-	r.Get("/about", action.About)
+func ConfigureRoute(r router.RouterAbstract, a *action.Action) {
+	r.Get("/", a.Home, AuthMiddleware, OAuthMiddleware)
+	r.Get("/about", a.About)
 }

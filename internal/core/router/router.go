@@ -5,11 +5,13 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
+type MiddlewareType = func(fasthttp.RequestHandler) fasthttp.RequestHandler
+
 // RouterAbstract ..
 type RouterAbstract interface {
-	Get(string, fasthttp.RequestHandler, ...func(fasthttp.RequestHandler) fasthttp.RequestHandler)
-	Post(string, fasthttp.RequestHandler, ...func(fasthttp.RequestHandler) fasthttp.RequestHandler)
-	Delete(string, fasthttp.RequestHandler, ...func(fasthttp.RequestHandler) fasthttp.RequestHandler)
+	Get(string, fasthttp.RequestHandler, ...MiddlewareType)
+	Post(string, fasthttp.RequestHandler, ...MiddlewareType)
+	Delete(string, fasthttp.RequestHandler, ...MiddlewareType)
 	GetHandle() fasthttp.RequestHandler
 }
 
@@ -26,17 +28,17 @@ func NewRouter() RouterAbstract {
 }
 
 // Get method
-func (r *Router) Get(path string, handle fasthttp.RequestHandler, middlewares ...func(fasthttp.RequestHandler) fasthttp.RequestHandler) {
+func (r *Router) Get(path string, handle fasthttp.RequestHandler, middlewares ...MiddlewareType) {
 	r.r.GET(path, withMiddlewares(handle, middlewares))
 }
 
 // Post method
-func (r *Router) Post(path string, handle fasthttp.RequestHandler, middlewares ...func(fasthttp.RequestHandler) fasthttp.RequestHandler) {
+func (r *Router) Post(path string, handle fasthttp.RequestHandler, middlewares ...MiddlewareType) {
 	r.r.POST(path, withMiddlewares(handle, middlewares))
 }
 
 // Delete method
-func (r *Router) Delete(path string, handle fasthttp.RequestHandler, middlewares ...func(fasthttp.RequestHandler) fasthttp.RequestHandler) {
+func (r *Router) Delete(path string, handle fasthttp.RequestHandler, middlewares ...MiddlewareType) {
 	r.r.DELETE(path, withMiddlewares(handle, middlewares))
 }
 
@@ -46,7 +48,7 @@ func (r *Router) GetHandle() fasthttp.RequestHandler {
 }
 
 // Handle middlewares
-func withMiddlewares(handle fasthttp.RequestHandler, middlewares []func(fasthttp.RequestHandler) fasthttp.RequestHandler) fasthttp.RequestHandler {
+func withMiddlewares(handle fasthttp.RequestHandler, middlewares []MiddlewareType) fasthttp.RequestHandler {
 	for _, m := range middlewares {
 		handle = m(handle)
 	}
